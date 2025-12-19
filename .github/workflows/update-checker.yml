@@ -18,8 +18,8 @@ env:
 
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: 0 0 18 ? * L
+  schedule:
+    - cron: 0 0 18 ? * L
 
 jobs:
   check:
