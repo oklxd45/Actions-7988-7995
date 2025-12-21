@@ -33,29 +33,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Cache OpenWRT dl directory
-        uses: actions/cache@main
-        id: cache-dl
-        with:
-          path: ./dl
-          key: ${{ runner.os }}-openwrt-dl-${{ hashFiles('feeds.conf.default', 'package/**/Makefile') }}
-          restore-keys: |
-            ${{ runner.os }}-openwrt-dl-
-
-      # 缓存编译中间文件（staging_dir目录）：避免重复编译依赖库
-      - name: Cache OpenWRT staging directory
-        uses: actions/cache@v3
-        id: cache-staging
-        with:
-          path: |
-            ./staging_dir
-            ./toolchain
-            ./tmp
-            ./build_dir
-          key: ${{ runner.os }}-openwrt-staging-${{ hashFiles('.config', 'package/**/Makefile') }}
-          restore-keys: |
-            ${{ runner.os }}-openwrt-staging-
-
     - name: Checkout
       uses: actions/checkout@main
 
