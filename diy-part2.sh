@@ -122,15 +122,3 @@ if [[ -f "${RESTORE_PACKAGES_FILE}" ]]; then
 else
   echo "File ${RESTORE_PACKAGES_FILE} does not exist." >&2
 fi
-
-# Change luci-app-qbittorrent name to luci-app-qbittorrent-original
-QBIT_APP_PATH="package/qbittorrent"
-if [[ -d "${QBIT_APP_PATH}" ]]; then
-  printf "Modifying %s...\n" "${QBIT_APP_PATH}"
-  if [[ -d "${QBIT_APP_PATH}/luci-app-qbittorrent" ]]; then
-    mv "${QBIT_APP_PATH}/luci-app-qbittorrent" "${QBIT_APP_PATH}/luci-app-qbittorrent-original"
-  fi
-  sed -i "s/luci-app-qbittorrent/luci-app-qbittorrent-original/" "${QBIT_APP_PATH}/luci-app-qbittorrent-original/Makefile"
-else
-  echo "Dir ${QBIT_APP_PATH} does not exist." >&2
-fi
