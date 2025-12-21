@@ -34,7 +34,7 @@ jobs:
 
     steps:
     - name: Cache OpenWRT dl directory
-        uses: actions/cache@v3
+        uses: actions/cache@main
         id: cache-dl
         with:
           path: ./dl
