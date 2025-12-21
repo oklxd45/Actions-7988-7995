@@ -19,14 +19,6 @@
 # Modify hostname
 #sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
 
-# Modify password to empty
-PASSWD_FILE="package/base-files/files/etc/passwd"
-if [[ -f "${PASSWD_FILE}" ]]; then
-  sed -i "s/\/bin\/ash/\/bin\/bash/" "${PASSWD_FILE}"
-else
-  echo "File ${PASSWD_FILE} does not exist." >&2
-fi
-
 clone_repo() {
   local repo="$1"
   local branch="$2"
