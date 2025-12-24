@@ -62,41 +62,6 @@ fi
 clone_repo https://github.com/jerrykuku/luci-theme-argon.git master \
   feeds/luci/themes/luci-theme-argon
 
-# Clone custom packages
-clone_repo https://github.com/rockjake/luci-app-fancontrol.git main \
-  package/fancontrol
-clone_repo https://github.com/anoixa/bpi-r4-pwm-fan main \
-  package/bpi-r4-pwm-fan
-
-# Modify luci collections to remove uhttpd dependency
-modify_luci_collection() {
-  local makefile="$1"
-  shift
-  local sed_exprs=("$@")
-
-  if [[ -f "${makefile}" ]]; then
-    printf "Modifying %s...\n" "${makefile}"
-    sed -i "${sed_exprs[@]}" "${makefile}"
-  else
-    echo "File ${makefile} does not exist." >&2
-  fi
-}
-
-modify_luci_collection "feeds/luci/collections/luci/Makefile" \
-  -e '/LUCI_DEPENDS/,/^$/ { /luci-app-attendedsysupgrade/d; s/luci-app-package-manager\s*\\/luci-app-package-manager/g; }'
-
-modify_luci_collection "feeds/luci/collections/luci-light/Makefile" \
-  -e '/LUCI_DEPENDS/,/^$/ { /uhttpd/d; s/luci-theme-bootstrap/luci-theme-argon/g; s/rpcd-mod-rrdns\s*\\/rpcd-mod-rrdns/g; }'
-
-modify_luci_collection "feeds/luci/collections/luci-nginx/Makefile" \
-  -e '/LUCI_DEPENDS/,/^$/ { /luci-app-attendedsysupgrade/d; s/luci-theme-bootstrap/luci-theme-argon/g; }'
-
-modify_luci_collection "feeds/luci/collections/luci-ssl/Makefile" \
-  -e '/LUCI_DEPENDS/,/^$/ { /luci-app-attendedsysupgrade/d; s/luci-app-package-manager\s*\\/luci-app-package-manager/g; }'
-
-modify_luci_collection "feeds/luci/collections/luci-ssl-openssl/Makefile" \
-  -e '/LUCI_DEPENDS/,/^$/ { /luci-app-attendedsysupgrade/d; s/luci-app-package-manager\s*\\/luci-app-package-manager/g; }'
-
 # Set Rust build arg llvm.download-ci-llvm to false.
 RUST_MAKEFILE="feeds/packages/lang/rust/Makefile"
 if [[ -f "${RUST_MAKEFILE}" ]]; then
